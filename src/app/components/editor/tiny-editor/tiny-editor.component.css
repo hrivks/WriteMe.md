@@ -1,0 +1,50 @@
+.tiny-editor .mce-toolbar-grp {
+    padding: 0.25rem;
+    background: #f0f0f0;
+}
+
+.tiny-editor .mce-toolbar-grp .mce-btn {
+    background: #f0f0f0;
+    border-color: #CCC;
+}
+
+.tiny-editor .mce-toolbar-grp .mce-btn:hover {
+    background: #CCC;
+}
+.tiny-editor .mce-toolbar-grp .mce-btn.mce-active {
+    background: #555c66;
+    color: #fff;
+}
+
+.tiny-editor .mce-toolbar-grp .mce-btn button {
+    padding: 4px 6px;    
+}
+
+.tiny-editor .mce-toolbar-grp .mce-listbox button {
+    padding-right: 15px;
+}
+
+.tiny-editor .mce-toolbar-grp .mce-listbox .mce-listbox .mce-caret {
+    right: 3px;
+}
+
+.tiny-editor #tiny-editor-modal .modal-dialog.modal-xl {
+    max-width: 85%;
+}
+
+.tiny-editor #tiny-editor-modal .modal-body {
+    overflow-y: auto;
+}
+
+.tiny-editor .mce-edit-area {
+    border-top:none;
+}
+
+.tiny-editor .popover {
+    max-width: 280px !important;
+    width: 280px;
+}
+
+.tiny-editor .popover-content {
+    overflow-y: auto;
+}

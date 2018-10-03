@@ -1,0 +1,17 @@
+.user-social {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    box-shadow: 0px 0px 15px -1px;
+    overflow-y: auto;
+    z-index: 500;
+}
+
+.user-social-mask {
+    position: absolute;
+    z-index: 499;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}

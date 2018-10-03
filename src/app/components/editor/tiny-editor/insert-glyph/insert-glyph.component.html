@@ -1,0 +1,95 @@
+<div class="insert-glyph">
+
+    <nav class="nav nav-tabs"
+         role="tablist">
+        <a class="nav-item nav-link active"
+           data-toggle="tab"
+           href="#icons-fa"
+           role="tab"
+           (click)="selectedType='fa'">Icons</a>
+        <a class="nav-item nav-link"
+           data-toggle="tab"
+           href="#icons-emoji"
+           role="tab"
+           (click)="selectedType='emoji'">Emoji</a>
+    </nav>
+    <div class="tab-content"
+         id="nav-tabContent">
+
+        <!-- Icons tab -->
+        <div class="tab-pane fade show active"
+             id="icons-fa"
+             role="tabpanel">
+            <!-- Search and size -->
+            <div class="form-group form-inline m-1">
+                <input type="text"
+                       class="form-control form-control-sm w-50"
+                       placeholder="Search..."
+                       [(ngModel)]="glyphFilter">
+                <!-- Size dropdown -->
+                <div class="dropdown ml-auto">
+                    <button class="btn dropdown-toggle btn-sm"
+                            type="button"
+                            data-toggle="dropdown">
+                        Size: {{selectedSize}}
+                    </button>
+                    <div class="dropdown-menu mt-0">
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='sm'">sm</button>
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='lg'">lg</button>
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='2x'">2x</button>
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='3x'">3x</button>
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='4x'">4x</button>
+
+                        <button class="dropdown-item"
+                                href="#"
+                                (click)="selectedSize='5x'">5x</button>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Icons List -->
+            <div class="text-center"
+                 *ngIf="selectedType==='fa'">
+                <span *ngFor="let ico of faIconsList | stringFilter: glyphFilter"
+                      class="text-center fa fa-{{ico}} fa-{{selectedSize}} p-1 m-1 border border-faded"
+                      title={{ico}}
+                      (click)="selectIcon(ico)"></span>
+            </div>
+
+        </div>
+        <!-- /Icons tab -->
+
+        <!-- Emoji tab -->
+        <div class="tab-pane fade"
+             id="icons-emoji"
+             role="tabpanel">
+            <div class="form-group m-1">
+                <input type="text"
+                       class="form-control form-control-sm"
+                       placeholder="Search..."
+                       [(ngModel)]="emojiFilter">
+            </div>
+            <div class="text-center"
+                 *ngIf="selectedType==='emoji'">
+                <img *ngFor="let ico of emojisList | stringFilter:emojiFilter:'name'"
+                     class="emoji p-1 m-1 border border-faded"
+                     title={{ico.name}}
+                     [src]="ico.url"
+                     (click)="selectIcon(ico)" />
+            </div>
+        </div>
+    </div>
+
+</div>

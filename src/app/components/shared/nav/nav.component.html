@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-md navbar-inverse bg-primary fixed-top py-0">
+    <a class="navbar-brand text-white"
+       [routerLink]="['/']">WriteMe.md</a>
+    <!-- login for mobile view -->
+    <a class="navbar-toggler btn btn-primary ml-auto"
+       *ngIf="!loggedIn"
+       [routerLink]="['/login']">
+            <i class="fa fa-lg fa-sign-in text-light"></i>
+    </a>
+    <!-- nav bar toggle for mobile view -->
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar-content">
+        <i class="fa fa-bars text-light"></i>
+    </button>
+
+    <div class="collapse navbar-collapse pb-lg-0 text-white"
+         id="navbar-content">
+        <ul class="navbar-nav ml-4">
+            <li class="nav-item">
+                <a class="btn btn-sm btn-primary text-white"
+                   [routerLink]="['/']">Editor</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-4">
+            <li class="nav-item">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-primary  text-white d-inline"
+                       [routerLink]="['/projects']">Projects</a>
+                    <a class="btn btn-sm btn-primary text-white d-inline px-2"
+                       [routerLink]="['/project', 'new']"><i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-4"
+            *ngIf="loggedIn?.isSiteAdmin">
+            <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-primary text-warning"
+                   [routerLink]="['/admin']">
+                   <i class="fa fa-bolt"></i>
+                   <span>Admin</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Login form -->
+        <ul class="navbar-nav ml-auto">
+            <div class="btn-group"
+                 *ngIf="!loggedIn">
+                <!-- Login button -->
+                <a class="btn btn-block btn-secondary my-2 my-sm-0 btn-sm border-top-0"
+                   [routerLink]="['/login']">Login</a>
+                <!-- Register button -->
+                <a class="btn btn-secondary my-2 my-sm-0 btn-sm p-1 text-dark"
+                   (click)="loginToGit()">
+                    <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-block border text-white ml-2 my-2 my-sm-0 btn-sm"
+                   [routerLink]="['/register']">Register</a>
+            </div>
+        </ul>
+        <!-- / Login form -->
+
+        <!-- Logout form -->
+        <ul class="ml-auto navbar-nav"
+            *ngIf="loggedIn">
+            <li class="nav-item mx-1">
+                <a [routerLink]="['/profile']"
+                   class="btn btn-sm btn-primary text-light">
+                    <span class="fa fa-user-circle fa-lg mx-2"></span>
+                    <span> {{loggedIn.name || loggedIn.username}}</span>
+                </a>
+            </li>
+            <!-- feeds -->
+            <li class="nav-item mx-2">
+                <a class="btn btn-sm btn-primary text-light py-2 px-3"
+                   (click)="showFeeds()">
+                   <i class="fa fa-rss fa-lg mx-2"></i>
+                   <span class="d-inline d-sm-none"> Feeds </span>
+                 </a>
+            </li>
+            <li class="nav-item mx-2">
+                <button class="btn btn-secondary btn-sm mb-1 mb-sm-0 float-right"
+                        (click)="logout()">Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>

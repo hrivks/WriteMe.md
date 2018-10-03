@@ -1,0 +1,154 @@
+<div class="container">
+    <div class="row"
+         *ngIf="project">
+        <div class="col">
+            <h4>
+                Edit Project
+                <a class="btn float-sm-right small py-1 px-3 btn-success"
+                   [routerLink]="['editor', project.markdown]">
+                   <i class="fa fa-lg fa-pencil-square-o"></i> Open in Editor</a>
+            </h4>
+            <hr class="mt-2">
+            <form #editProjectForm="ngForm"
+                  (submit)="updateProject()">
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">NAME</label>
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           name="name"
+                           #nameField="ngModel"
+                           [(ngModel)]="project.name"
+                           [ngClass]="{'btn-outline-danger': nameField.touched && !nameField.valid }"
+                           required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">DESCRIPTION</label>
+                    <textarea type="text"
+                              class="form-control form-control-sm"
+                              name="project.description"
+                              #nameField="ngModel"
+                              [(ngModel)]="description"></textarea>
+                </div>
+
+                <!-- Markdown file name -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="name">MARKDOWN FILE NAME</label>
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           name="markdownFileName"
+                           #markdownFileNameField="ngModel"
+                           [(ngModel)]="project.fileName"
+                           [ngClass]="{'btn-outline-danger': markdownFileNameField.touched && !markdownFileNameField.valid }"
+                           required>
+                </div>
+
+                <!-- Github Repo -->
+                <div class="form-group">
+                    <label class="control-label small text-dark"
+                           for="repo">LINK WITH GITHUB REPO</label>
+                    <div>
+                        <a *ngIf="!loggedInUser.github || !loggedInUser.github.token"
+                           href="http://localhost:3100/api/auth/github"
+                           class="btn btn-primary py-1">Login to Github</a>
+                        <div class="input-group input-group-sm"
+                             *ngIf="loggedInUser.github && loggedInUser.github.token">
+                            <div class="input-group-btn">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary py-2 px-3 m-0"
+                                            type="button"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                           *ngFor="let r of repos"
+                                           (click)="project.repo=r">{{r}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text"
+                                   class="form-control"
+                                   name="repo"
+                                   #repoField="ngModel"
+                                   [(ngModel)]="project.repo"
+                                   placeholder="Select or enter Repo full name">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users -->
+                <div class="mt-2">
+                    <div class="row mb-2">
+                        <span class="btn btn-secondary px-1 py-1 text-muted"
+                              data-toggle="collapse"
+                              data-target="#user-wrap">
+                                <i class="fa fa-chevron-down mr-1"></i>
+                                <span class="text-size-normal font-weight-normal">Users</span>
+                        </span>
+                    </div>
+                    <div id="user-wrap"
+                         class="collapse">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <!-- Admins -->
+                                <div class="form-group">
+                                    <label class="control-label small text-dark"
+                                           for="name">ADMINS</label>
+                                    <app-user-list-select [ignoreIds]="[loggedInUser._id]"
+                                                          [(selectedUserIds)]="project.admins"></app-user-list-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <!-- Members -->
+                                <div class="form-group">
+                                    <label class="control-label small text-dark"
+                                           for="name">MEMBERS</label>
+                                    <app-user-list-select [ignoreIds]="[loggedInUser._id]"
+                                                          [(selectedUserIds)]="project.members"></app-user-list-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="small text-danger" *ngIf="!canEdit">
+                        You do not have permission to update this project
+                    </span>
+                <div class="form-group">
+                    <button class="btn btn-primary py-1"
+                            type="submit"
+                            [disabled]="!editProjectForm.valid || !canEdit">Update</button>
+
+                    <button class="btn btn-danger py-1"
+                            type="button"
+                            [disabled]="!canEdit"
+                            [hidden]="confirmDelete"
+                            (click)="confirmDelete=true">
+                            <i class="fa fa-trash fa-lg"></i>
+                          </button>
+                    <button class="btn btn-danger py-1"
+                            type="button"
+                            [hidden]="!confirmDelete"
+                            (click)="deleteProject()">
+                          <i class="fa fa-trash fa-lg mr-2"></i> Sure?
+                        </button>
+
+                    <div class="progress"
+                         [hidden]="!inProgres">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated w-100"
+                             role="progressbar"></div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

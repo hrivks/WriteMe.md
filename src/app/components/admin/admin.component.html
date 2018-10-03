@@ -1,0 +1,145 @@
+<div class="container">
+    <div class="row"
+         *ngIf="isSiteAdmin">
+        <div class="col">
+            <h4>Admin</h4>
+            <hr class="mt-2">
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       data-toggle="tab"
+                       data-target="#projects"
+                       role="tab">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       data-toggle="tab"
+                       data-target="#users"
+                       role="tab">Users</a>
+                </li>
+            </ul>
+
+            <div class="tab-content p-2 py-4">
+
+                <!-- Projects  -->
+                <div class="tab-pane active show fade"
+                     id="projects"
+                     role="tabpanel">
+
+                    <!-- Create new project -->
+                    <form (submit)="createProject()">
+                        <div class="input-group">
+                            <button class="input-group-btn btn btn-sm py-2 btn-success"
+                                    title="Add new project">
+                                <i class="fa fa-plus-circle fa-lg"></i>
+                            </button>
+                            <input type="text"
+                                   class="form-control form-control-sm py-2"
+                                   name="newProjectName"
+                                   [(ngModel)]="newProjectName"
+                                   placeholder="New Project Name"
+                                   required>
+                        </div>
+                    </form>
+
+                    <!-- Projects list -->
+                    <ul class="list-group mt-2">
+                        <li class="list-group-item p-1"
+                            *ngFor="let project of projects">
+
+                            <div class="input-group">
+                                <!-- Delete Project -->
+                                <button class="btn btn-outline-danger border-0 py-2 px-3"
+                                        (click)="deleteProject(project)"
+                                        title="Delete Project">
+                                    <i class="fa fa-minus-circle"></i>
+                                </button>
+
+                                <!-- Edit Project -->
+                                <a class="btn btn-outline-info border-0 py-2 px-3"
+                                   [routerLink]="['/project', project._id]"
+                                   title="Edit Project">
+                                    <i class="fa fa-gear"></i>
+                                </a>
+
+                                <!-- Project Name -->
+                                <a class="form-control border-0 bg-light btn py-2 nt"
+                                   [routerLink]="['/project', project._id, 'editor', project.markdown]">
+                                    {{project.name}}
+                                    <i class="fa fa-asterisk ml-2 text-success"
+                                       *ngIf="project === newlyCreatedProject"></i>
+                                </a>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Users  -->
+                <div class="tab-pane active fade"
+                     id="users"
+                     role="tabpanel">
+
+
+                    <!-- Create new user -->
+                    <form (submit)="createUser()">
+                        <div class="input-group">
+                            <button class="input-group-btn btn btn-sm py-2 btn-success"
+                                    title="Add new User">
+                                <i class="fa fa-plus-circle fa-lg"></i>
+                            </button>
+                            <input type="text"
+                                   class="form-control form-control-sm py-2"
+                                   name="newUserName"
+                                   [(ngModel)]="newUserName"
+                                   placeholder="New User Name"
+                                   required>
+                            <input type="password"
+                                   class="form-control form-control-sm py-2"
+                                   name="newUserPassword"
+                                   [(ngModel)]="newUserPassword"
+                                   placeholder="New User Password"
+                                   required>
+                        </div>
+                    </form>
+
+                    <!-- Users list -->
+                    <ul class="list-group mt-2">
+                        <li class="list-group-item p-1"
+                            *ngFor="let user of users">
+
+                            <div class="input-group">
+                                <!-- Delete User -->
+                                <button class="btn btn-outline-danger border-0 py-2 px-3"
+                                        (click)="deleteUser(user)"
+                                        title="Delete User">
+                                    <i class="fa fa-minus-circle"></i>
+                                </button>
+
+                                <!-- Edit User -->
+                                <a class="form-control border-0 bg-light btn py-2 nt"
+                                   [routerLink]="['/profile', user._id]">
+                                    {{user.name || user.username}}
+                                    <i class="fa fa-asterisk ml-2 text-success"
+                                       *ngIf="user === newlyCreatedUser"></i>
+                                </a>
+
+                                <!-- Make User Admin -->
+                                <button class="btn border-0 py-2 px-3"
+                                        [ngClass]="user.isSiteAdmin? 'btn-warning':'btn-outline-warning'"
+                                        (click)="makeUserAdmin(user)"
+                                        title="Make Site Admin">
+                                    <i class="fa fa-bolt"></i>
+                                </button>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

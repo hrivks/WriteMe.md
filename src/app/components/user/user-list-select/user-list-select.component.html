@@ -1,0 +1,51 @@
+<div class="user-list-select">
+    <!-- Search -->
+    <form (submit)="searchUsers()">
+        <div class="input-group input-group-sm">
+            <input type="text"
+                   name="searchQuery"
+                   class="form-control py-1"
+                   placeholder="Eg: alice, bob"
+                   [(ngModel)]="searchQuery">
+            <button type="submit"
+                    class="input-group-btn btn btn-sm btn-primary">
+                   <i class="fa fa-search"></i>
+               </button>
+        </div>
+    </form>
+    <!-- Search results -->
+    <div class="list-group small">
+        <a class="list-group-item list-group-item-action py-1 bg-dark"
+           *ngFor="let user of searchResults"
+           (click)="selectUser(user)">
+                <i *ngIf="selectedUserIds.indexOf(user._id) === -1" class="fa fa-plus-square text-warning"></i>               
+              <span *ngIf="user.name" class="ml-2">
+                {{user.name}} <small class="text-muted">{{user.username}}</small>
+              </span>
+              <span *ngIf="!user.name">
+                  {{user.username}}
+              </span>
+              <span *ngIf="selectedUserIds.indexOf(user._id) > -1" class="small text-warning">
+                Already added
+              </span>
+            </a>
+        <span class="list-group-item py-1 bg-danger text-light"
+              *ngIf="zeroResults">
+                <em>No users found</em>
+        </span>
+    </div>
+    <!-- Selected users -->
+    <ul class="list-group mt-2">
+        <li class="list-group-item list-group-item-action py-2"
+            *ngFor="let user of users">
+            <i class="fa fa-minus-circle fa-lg text-danger"
+               (click)="removeUser(user)"></i>
+            <span *ngIf="user.name">
+            {{user.name}} <small class="text-muted">{{user.username}}</small>
+          </span>
+            <span *ngIf="!user.name">
+              {{user.username}}
+          </span>
+        </li>
+    </ul>
+</div>

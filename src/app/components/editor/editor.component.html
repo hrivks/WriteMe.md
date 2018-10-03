@@ -1,0 +1,202 @@
+<div class="row no-gutters editor pb-4"
+     [hidden]="!loadComplete">
+
+    <!-- Editor -->
+    <div class="col-12 col-sm-6 pr-md-2 editor-wrapper collapse show"
+         id="editor-wrapper">
+        <app-tiny-editor [(markdownHtml)]="markdownHtml"
+                         [height]="compHeight + 27"
+                         (loadComplete)="onEditorLoad($event)"></app-tiny-editor>
+    </div>
+
+    <!-- Preview -->
+    <div class="col-12 col-sm-6 pl-md-2 preview-wrapper collapse show"
+         id="preview-wrapper">
+        <div class="card text-center">
+            <div class="card-header bg-editor-gray pt-2">
+
+                <ul class="nav nav-tabs card-header-tabs"
+                    role="tablist">
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           [ngClass]="{'active': activeTab === 'preview' }"
+                           (click)="activeTab='preview'"
+                           role="tab">Preview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           [ngClass]="{'active': activeTab === 'markdown' }"
+                           (click)="activeTab='markdown'"
+                           role="tab">Markdown</a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="card-body p-1"
+                 #previewTabBody>
+                <!-- Tab panes -->
+                <div class="tab-content p-2">
+
+                    <!-- Preview tab -->
+                    <div class="tab-pane active show fade text-left"
+                         [ngClass]="{'show': activeTab === 'preview' }"
+                         role="tabpanel">
+                        <div *ngIf="activeTab === 'preview'"
+                             class="tab-pane-inner"
+                             [style.height.px]="compHeight">
+                            <div class="markdown-body text-dark"
+                                 [innerHtml]="markdownHtml"></div>
+                        </div>
+                    </div>
+
+                    <!-- markdown tab -->
+                    <div class="tab-pane active fade"
+                         [ngClass]="{'show': activeTab === 'markdown' }"
+                         role="tabpanel">
+                        <div *ngIf="activeTab === 'markdown'"
+                             [style.height.px]="compHeight"
+                             class="tab-pane-inner">
+                            <textarea class="w-100 h-100 border-0 markdown-preview"
+                                      [ngModel]="markdownHtml | markdownConvertor"
+                                      readonly></textarea>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- tab content -->
+            </div>
+        </div>
+    </div>
+    <!-- preview wrapper -->
+</div>
+
+<!-- Editor Modals -->
+<div class="models-wrap">
+    <div id="editor-modal"
+         #modal
+         class="modal fade p-0">
+        <div class="modal-dialog"
+             [ngClass]="modals[openModalKey]?.size"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{modals[openModalKey]?.title}}</h5>
+                    <button type="button"
+                            class="close"
+                            (click)="closeModal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body pb-2"
+                     [style.height.px]="modalHeight">
+
+                    <!-- Commit to Git modal -->
+                    <div *ngIf="openModalKey === 'commitToGit'">
+                        <app-commit-to-git [fileContent]="markdownHtml | markdownConvertor"
+                                           [repoName]="project?.gitRepo"
+                                           (onComplete)="closeModal($event)"></app-commit-to-git>
+                    </div>
+
+                    <!-- Save Markdown modal -->
+                    <div *ngIf="openModalKey === 'save'">
+                        <app-save-markdown [markdown]="markdown"
+                                           [project]="project"
+                                           (onComplete)="closeModal($event)"></app-save-markdown>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Editor Modals -->
+
+<!-- footer -->
+<nav class="navbar navbar-expand-md bg-faded border-faded fixed-bottom hvj-footer p-1 px-3">
+
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#footer-options"
+            aria-label="Toggle navigation">
+        <i class="fa fa-bars text-primary"></i>
+    </button>
+
+    <!-- Mobile view toggles -->
+    <div class="mobile-view-toggles d-inline-block d-sm-none float-right ">
+        <!-- show editor -->
+        <button class="btn btn-sm btn-primary btn-success py-1 px-2"
+                id="show-editor-toggle"
+                type="button">
+            <i class="fa fa-pencil"></i> <span>Editor</span>
+        </button>
+        <!-- show preview -->
+        <button class="btn btn-sm btn-primary py-1 px-2"
+                id="show-preview-toggle"
+                type="button">
+            <i class="fa fa-eye"></i> <span>Preview</span>
+        </button>
+    </div>
+
+    <div class="ml-auto collapse navbar-collapse mt-2 mt-sm-0"
+         id="footer-options">
+
+        <!-- Project and edit info -->
+        <div class="d-sm-inline-flex mr-auto"
+             *ngIf="project">
+            <ul class="navbar-nav mb-1 mb-sm-0 mx-sm-2">
+                <!-- Edit project -->
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-sm btn-primary py-1"
+                       [routerLink]="['/project', project._id]">
+                       <i class="fa fa-gear fa-lg mr-2"></i> 
+                       <span>{{project.name}}</span>
+                    </a>
+                </li>
+                <!-- Edited info -->
+                <li class="nav-item m-0 ml-sm-3"
+                    *ngIf="markdown">
+                    <span class="nav-text py-1">
+                        <small>
+                            <em>Last Edited by <span class="text-dark font-weight-bold">{{markdown.editedBy}}</span> on <span class="text-dark">{{markdown.editedOn | date: 'short'}}</span></em>
+                    </small>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <!-- Markdown save options -->
+        <div class="d-sm-inline-flex ml-auto">
+            <!-- Save Markdown -->
+            <ul class="navbar-nav mb-1 mb-sm-0 mx-sm-2">
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-sm btn-primary py-1"
+                       (click)="save()">Save</a>
+                </li>
+            </ul>
+            <!-- Commit to git -->
+            <ul class="navbar-nav mb-1 mb-sm-0 mx-sm-2">
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-sm btn-primary py-1"
+                       (click)="showCommitToGitModal()">
+                       <i class="fa fa-github fa-lg mr-2" ></i>
+                       <span>Commit to Git</span> 
+                    </a>
+                </li>
+            </ul>
+            <!-- Download markdown -->
+            <ul class="navbar-nav mb-1 mb-sm-0 mx-sm-2">
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-sm btn-primary py-1"
+                       (click)="download()">
+                        <i class="fa fa-download fa-lg mr-2"></i>
+                        <span>Download</span> 
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

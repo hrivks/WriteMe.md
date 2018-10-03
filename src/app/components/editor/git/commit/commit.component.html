@@ -1,0 +1,104 @@
+<div class="git-commit">
+
+    <div *ngIf="!gitToken">
+        <!-- Git Login prompt -->
+        <div class="my-3 text-center">
+            <i class="fa fa-github fa-5x text-dark"></i>
+            <br>
+            <button type="button"
+                    class="btn btn-primary btn-sm mt-3"
+                    (click)="loginToGit()">Login to Github</button>
+        </div>
+    </div>
+
+    <div *ngIf="gitToken">
+
+        <form (submit)="commit()"
+              #commitForm="ngForm">
+
+            <!-- Repos list -->
+            <div class="form-group">
+                <label class="control-label"
+                       for="repo">Repository</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-btn">
+                        <div class="btn-group">
+                            <button class="btn btn-primary py-2 px-3 m-0"
+                                    type="button"
+                                    data-toggle="dropdown">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   *ngFor="let r of repos"
+                                   (click)="repo=r">{{r}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text"
+                           class="form-control"
+                           name="repo"
+                           #repoField="ngModel"
+                           [(ngModel)]="repo"
+                           [ngClass]="{'btn-outline-danger': repoField.touched && !repoField.valid }"
+                           placeholder="Select or enter Repo full name"
+                           required>
+
+                </div>
+            </div>
+
+            <!-- Branch -->
+            <div class="form-group">
+                <label class="control-label"
+                       for="branch">Branch Name</label>
+                <input type="text"
+                       class="form-control form-control-sm"
+                       name="branch"
+                       #branchField="ngModel"
+                       [(ngModel)]="branch"
+                       [ngClass]="{'btn-outline-danger': branchField.touched && !branchField.valid }"
+                       required>
+            </div>
+
+            <!-- File Name -->
+            <div class="form-group">
+                <label class="control-label"
+                       for="fileName">File Name</label>
+                <input type="text"
+                       class="form-control form-control-sm"
+                       name="fileName"
+                       [(ngModel)]="fileName"
+                       #fileNameField="ngModel"
+                       [ngClass]="{'btn-outline-danger': fileNameField.touched && !fileNameField.valid }"
+                       required>
+            </div>
+
+            <!-- Commit message -->
+            <div class="form-group">
+                <label class="control-label"
+                       for="commitMessage">Commit Message</label>
+                <input type="text"
+                       class="form-control form-control-sm"
+                       #commitMessageField="ngModel"
+                       [(ngModel)]="commitMessage"
+                       [ngClass]="{'btn-outline-danger': commitMessageField.touched && !commitMessageField.valid }"
+                       name="commitMessage"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-sm"
+                        [hidden]="commitInProgres"
+                        [disabled]="!commitForm.valid">Commit</button>
+
+                <div class="progress"
+                     [hidden]="!commitInProgres">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated w-100"
+                         role="progressbar"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>

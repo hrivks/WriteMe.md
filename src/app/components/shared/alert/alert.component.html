@@ -1,0 +1,26 @@
+<div class="hvj-app-alert">
+
+  <div class="alert fade show"
+       [hidden]="!alertVisible"
+       [ngClass]="'alert-' + (alertType ? alertType : 'danger')"
+       role="alert">
+    <button type="button"
+            class="close"
+            (click)="alertVisible = false">
+      <small>
+        <i class="fa fa-times"
+           aria-hidden="true"></i>
+      </small>
+    </button>
+
+    <div class="d-inline-block align-middle mr-3">
+      <i class="fa fa-2x"
+         [ngClass]="{ 'fa-times-circle' : alertType === 'danger', 'fa-exclamation-cirlce' : alertType === 'warning', 'fa-check-circle' : alertType==='success' }"    
+         aria-hidden="true"></i>
+    </div>
+    <div [innerHtml]="alertText"
+         class="alert-text d-inline-block align-middle"></div>
+
+  </div>
+
+</div>

@@ -1,0 +1,61 @@
+<div class="row insert-media">
+    <div class="col bg-light border-0">
+
+        <!-- Tab Nav -->
+        <ul class="nav nav-tabs"
+            role="tablist">
+            <li class="nav-item"
+                (click)="openComponent = 'image'">
+                <a class="nav-link active py-1"
+                   data-toggle="tab"
+                   href="#media-insert-image"
+                   role="tab">Image</a>
+            </li>
+            <li class="nav-item"
+                (click)="openComponent = 'icon'">
+                <a class="nav-link py-1"
+                   data-toggle="tab"
+                   href="#media-insert-icon"
+                   role="tab">Icon</a>
+            </li>
+            <li class="nav-item"
+                (click)="openComponent = 'youtube'">
+                <a class="nav-link py-1"
+                   data-toggle="tab"
+                   href="#media-insert-youtube"
+                   role="tab">YouTube</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-2">
+
+            <!-- Insert Image -->
+            <div class="tab-pane active"
+                 id="media-insert-image"
+                 role="tabpanel">
+                <app-insert-image [compHeight]="compHeight"
+                                  [compControl]="subComponents.image"></app-insert-image>
+            </div>
+
+            <!-- Insert Icon -->
+            <div class="tab-pane"
+                 id="media-insert-icon"
+                 role="tabpanel">
+                <app-icon-search [compHeight]="compHeight"
+                                 [compControl]="subComponents.icon"></app-icon-search>
+            </div>
+
+            <!-- Insert Youtube -->
+            <div class="tab-pane"
+                 id="media-insert-youtube"
+                 role="tabpanel">
+                <app-insert-youtube [compHeight]="compHeight"
+                                    [compControl]="subComponents.youtube"></app-insert-youtube>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="user-registration mt-3"
+         *ngIf="user">
+        <h3>
+            Profile
+        </h3>
+        <div *ngIf="user.isSiteAdmin"
+             class="text-warning small"> [<i class="fa fa-bolt"></i> ADMIN ]
+        </div>
+        <hr>
+        <!--form-->
+        <form class="form"
+              (ngSubmit)="save()"
+              #profileForm="ngForm">
+            <!-- User Name -->
+            <div class="form-group">
+                <label class="control-label small text-dark"
+                       for="username">USER NAME</label>
+                <input placeholder="User Name"
+                       type="text"
+                       class="form-control form-control-sm py-1"
+                       name="usernameField"
+                       [(ngModel)]="user.username"
+                       #usernameField="ngModel"
+                       disabled/>
+            </div>
+
+            <!-- Name -->
+            <div class="form-group">
+                <label class="control-label small text-dark"
+                       for="name">NAME</label>
+                <input placeholder="Name"
+                       type="text"
+                       class="form-control form-control-sm py-1"
+                       name="nameField"
+                       [(ngModel)]="user.name"
+                       #nameField="ngModel" />
+            </div>
+
+            <div class="row">
+                <!-- Password -->
+                <div class="form-group col-sm-6 col-12">
+                    <label class="control-label small text-dark"
+                           for="password">CHANGE PASSWORD</label>
+                    <input placeholder="Password"
+                           type="password"
+                           class="form-control form-control-sm py-1"
+                           name="passwordField"
+                           [(ngModel)]="password"
+                           #passwordField="ngModel" />
+                </div>
+
+                <!-- Verify Password -->
+                <div class="form-group col-sm-6 col-12">
+                    <label class="control-label small text-dark"
+                           for="name">CONFIRM CHANGE PASSWORD</label>
+                    <input placeholder="Verify Password"
+                           type="password"
+                           class="form-control form-control-sm py-1"
+                           name="verifyPasswordField"
+                           [(ngModel)]="verifyPassword"
+                           #verifyPasswordField="ngModel" />
+                    <span *ngIf="verifyPassword && verifyPassword !== password && verifyPasswordField.touched"
+                          class="text-danger ml-2 small">Passwords do not match</span>
+                </div>
+
+                <!-- Link to git -->
+                <div class="form-group col-sm-6 col-12">
+                    <label class="control-label small text-dark"
+                           for="name">LINK To GIT</label>
+                    <div *ngIf="linkedToGit">
+                        <span class="text-success">Your profile is linked to GitHub</span>
+                        <span class="btn btn-danger btn-sm py-1 ml-2"
+                              (click)="unlinkGit()">
+                              <i class="fa fa-minus-circle"></i>
+                              Unlink</span>
+                    </div>
+                    <div *ngIf="!linkedToGit">
+                        <button class="btn btn-success btn-sm py-1"
+                                type="button"
+                                (click)="loginToGit()">
+                                <i class="fa fa-github fa-lg mr-2"></i>
+                                Link to Github</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- form actions -->
+            <div>
+                <button type="submit"
+                        class="btn btn-sm btn-primary py-1"
+                        [disabled]="profileForm.invalid">Save</button>
+            </div>
+            <!-- /form actions -->
+        </form>
+        <!--/form-->
+    </div>
+</div>

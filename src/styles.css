@@ -1,0 +1,70 @@
+/** Bootstrap Enhancements **/
+
+.hvj .border {
+    border: solid thin;
+}
+
+.hvj b,
+.hvj strong {
+    font-weight: bold !important;
+}
+
+.hvj .bg-faded {
+    background: #ededed;
+}
+
+.hvj .bg-light {
+    background: #fff;
+}
+
+.hvj .border-faded {
+    border-color: #CCC;
+}
+
+.hvj .bg-editor-gray {
+    background: #f0f0f0;
+}
+
+.hvj .btn {
+    font-family: "Nunito Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+}
+
+.hvj .btn.nt {
+    text-transform: none;
+}
+
+.hvj .btn:not(:disabled) {
+    cursor: pointer;
+}
+
+.hvj .btn-faded {
+    background: #ededed;
+    color: #888;
+}
+
+.hvj .btn-faded:hover,
+.hvj .btn-faded.active {
+    background: #b9b9b9;
+    color: white;
+}
+
+.hvj .btn-xs {
+    padding: 0;
+}
+
+.hvj .text-size-normal {
+    font-size: 0.875rem !important;
+}
+
+.hvj .list-group>a,
+.nav-link {
+    cursor: pointer;
+}
+
+
+/** Bootstrap Enhancements end **/
+
+.hvj .hvj-outermost {
+    padding-top: 55px;
+    padding-bottom: 10px;
+}

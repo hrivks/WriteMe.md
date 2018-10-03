@@ -1,0 +1,63 @@
+<div class="save-markdown">
+
+    <div *ngIf="!loggedInUser">
+        <!-- Login prompt -->
+        <div class="my-3 text-center">
+            <i class="fa fa-user-circle fa-5x text-dark"></i>
+            <br>
+            <br>
+            <p>You must be logged in to save markdown</p>
+            <p>
+                <a [routerLink]="['/login']"
+                   class="btn btn-sm py-2 btn-primary">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <div *ngIf="loggedInUser">
+
+        <form (submit)="saveMarkdown()"
+              #saveForm="ngForm">
+
+            <!-- Project Name -->
+            <div class="form-group"
+                 *ngIf="!project">
+                <label class="control-label"
+                       for="repo">Project Name</label>
+                <input type="text"
+                       class="form-control form-control-sm"
+                       name="projectName"
+                       #projectNameField="ngModel"
+                       [(ngModel)]="projectName"
+                       [ngClass]="{'btn-outline-danger': projectNameField.touched && !projectNameField.valid }"
+                       required>
+            </div>
+
+            <!-- File Name -->
+            <div class="form-group">
+                <label class="control-label"
+                       for="fileName">File Name</label>
+                <input type="text"
+                       class="form-control form-control-sm"
+                       name="fileName"
+                       [(ngModel)]="fileName"
+                       #fileNameField="ngModel"
+                       [ngClass]="{'btn-outline-danger': fileNameField.touched && !fileNameField.valid }"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-sm"
+                        [hidden]="saveInProgres"
+                        [disabled]="!saveForm.valid">Save</button>
+
+                <div class="progress"
+                     [hidden]="!saveInProgres">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated w-100"
+                         role="progressbar"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,9 @@
+table.mce-item-table tr:first-child {
+    font-weight: bold;
+    text-align: center;
+    background: #EEE;
+}
+
+table.mce-item-table td {
+    min-width: 100px;
+}

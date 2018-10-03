@@ -1,0 +1,41 @@
+.search-result-wrap .img-wrap {
+    width: 60px;
+    height: 60px;
+    transition: 0.1s ease-in-out;
+}
+
+.search-result-wrap .img-wrap:hover {
+    background: #EEE;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.search-result-wrap .img-wrap .img-container {
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.preview-img-outer {
+    position: relative;
+}
+
+.preview-img-outer>img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    max-width: 100%;
+}
+
+.preview-img-outer .ui-wrapper {
+    border: dashed thin;
+    padding: 15px;
+}
+
+.preview-img-outer .aspect-ratio-toggle {
+    position: absolute;
+    bottom: 0;
+}

@@ -1,0 +1,73 @@
+<div class="tiny-editor h-100">
+    <div class="h-100"
+         #tinyEditor></div>
+
+    <!-- Editor Modals -->
+    <div class="models-wrap">
+        <div id="tiny-editor-modal"
+             #tinyEditorModal
+             class="modal fade p-0">
+            <div class="modal-dialog"
+                 [ngClass]="modals[openModalKey]?.size"
+                 role="document">
+                <div class="modal-content">
+                    <div class="modal-header py-1">
+                        <h5 class="modal-title">{{modals[openModalKey]?.title}}</h5>
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pt-2 pb-0"
+                         [style.height.px]="modalHeight">
+
+                        <!-- Insert code modal -->
+                        <div [hidden]="openModalKey !== 'code'"
+                             class="h-100">
+                            <app-editor-insert-code [data]="modals['code']?.data"
+                                                    [compControl]="modals['code']?.control"
+                                                    [compHeight]="modalHeight - 80"></app-editor-insert-code>
+                        </div>
+
+                        <!-- Insert media modal -->
+                        <div [hidden]="openModalKey !== 'media'"
+                             class="h-100">
+                            <app-insert-media [compControl]="modals['media']?.control">
+                            </app-insert-media>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer py-1">
+                        <button type="button"
+                                class="btn btn-sm btn-primary"
+                                data-dismiss="modal"
+                                (click)="submitModel()">
+                             <i class="fa fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Editor Modals -->
+
+    <!-- Editor popovers -->
+    <div class="editor-popovers"
+         *ngIf="openPopoverKey">
+
+        <div class="popover fade popover-bottom show"
+             id="editor-popover"
+             role="tooltip">
+            <div class="arrow"></div>
+            <h3 class="popover-title">{{popovers[openPopoverKey]?.title}}</h3>
+            <div class="popover-content"
+                 [style.height.px]="modalHeight - 100">
+                <app-insert-glyph [compControl]="compControl"
+                                  (onIconSelect)="submitPopover($event)"></app-insert-glyph>
+            </div>
+        </div>
+    </div>
+
+</div>
